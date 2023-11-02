@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kube-dns-debug-metrics
+    jobLabel: kube-dns-debug
+    release: promstack
+  name: kube-dns-debug-metrics
+  namespace: kube-system
+spec:
+  internalTrafficPolicy: Cluster
+  ports:
+  - name: http-metrics-dnsmasq
+    port: 10054
+    protocol: TCP
+    targetPort: 10054
+  - name: http-metrics-skydns
+    port: 10055
+    protocol: TCP
+    targetPort: 10055
+  selector:
+    k8s-app: kube-dns
+    reason: debug
+  sessionAffinity: None
+  type: ClusterIP

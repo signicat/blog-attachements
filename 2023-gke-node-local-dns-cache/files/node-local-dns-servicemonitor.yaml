@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: node-local-dns
+  name: node-local-dns
+spec:
+  endpoints:
+  - path: /metrics
+    port: http-metrics
+    scheme: http
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  selector:
+    matchLabels:
+      k8s-app: node-local-dns
